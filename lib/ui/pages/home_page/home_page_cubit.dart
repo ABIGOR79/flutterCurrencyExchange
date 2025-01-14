@@ -1,20 +1,20 @@
-import 'package:flutter_app/repository/get_data.dart';
+import 'package:flutter_app/repository/abstract_coins_repository.dart';
 import 'package:flutter_app/ui/pages/home_page/home_page_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CoinCubit extends Cubit<CoinState> {
-  final GetData getData;
+  final AbstractCoinRepositoty repository;
 
-  CoinCubit(this.getData) : super(CoinState());
+  CoinCubit(this.repository) : super(CoinState());
 
   String _searchQuery = '';
   String? selectedCurrency;
 
   Future<void> loadCoins() async {
     emit(state.copyWith(isLoading: true));
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 2));
     try {
-      final coins = await getData.getData();
+      final coins = await repository.getData();
       emit(
           state.copyWith(coins: coins, filteredCoins: coins, isLoading: false));
     } catch (e) {

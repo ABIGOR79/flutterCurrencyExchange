@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/components/list_tile.dart';
-import 'package:flutter_app/repository/get_data.dart';
+import 'package:flutter_app/repository/abstract_coins_repository.dart';
 import 'package:flutter_app/ui/pages/home_page/home_page_cubit.dart';
 import 'package:flutter_app/ui/pages/home_page/home_page_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -19,7 +20,7 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   void initState() {
     super.initState();
-    cubit = CoinCubit(GetData());
+    cubit = CoinCubit(GetIt.I<AbstractCoinRepositoty>());
     cubit.loadCoins();
   }
 
