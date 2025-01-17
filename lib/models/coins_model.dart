@@ -17,6 +17,7 @@
 //   }
 // }
 
+import 'package:flutter/material.dart';
 import 'package:flutter_app/models/detail.dart';
 
 class CoinsData {
@@ -24,4 +25,11 @@ class CoinsData {
   final CoinDetail coinDetail;
 
   CoinsData({required this.symbol, required this.coinDetail});
+
+  @override
+  String toString() {
+    // Логируем данные в консоль
+    debugPrint("$symbol, $coinDetail");
+    return "$symbol, $coinDetail";
+  }
 }

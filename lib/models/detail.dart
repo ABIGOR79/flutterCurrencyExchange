@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'detail.g.dart';
@@ -22,6 +23,13 @@ class CoinDetail {
     required this.highHour,
     required this.lowHour,
   });
+
+  @override
+  String toString() {
+    // Логируем данные в консоль
+    debugPrint("$price, $highHour, $lowHour");
+    return "$price, $highHour, $lowHour";
+  }
 
   String get fullImageUrl => image != null
       ? 'https://www.cryptocompare.com$image'

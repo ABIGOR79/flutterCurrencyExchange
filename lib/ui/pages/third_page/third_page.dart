@@ -21,9 +21,16 @@ class _ThirdPageState extends State<ThirdPage> {
 
   void clearAll() async {
     await box.clear();
-    setState(() {});
+
+    if (!mounted) return;
+
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('All users have been deleted')),
+    );
+
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      '/registration',
+      (route) => false,
     );
   }
 
