@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "324842655015",
+    "project_id": "checkdataandfirebase",
+    "storage_bucket": "checkdataandfirebase.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324842655015:android:873719151cdcfc0a45ad02",
+        "android_client_info": {
+          "package_name": "com.flutterApp.abigor.ua"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_tjBmOWXOpjurQCfARpczvlt8y4i_Dbs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
