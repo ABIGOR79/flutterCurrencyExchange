@@ -7,7 +7,7 @@ class CoinState extends Equatable {
   final List<CoinsData> filteredCoins;
   final String? searchQuery;
   final String? selectedCurrency;
-  final bool useNetwork; // Новое поле
+  final bool useNetwork;
 
   const CoinState({
     this.isLoading = false,

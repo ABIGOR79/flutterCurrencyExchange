@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_app/repository/abstract_coins_repository.dart';
-import 'package:flutter_app/repository/get_data.dart';
-import 'package:flutter_app/repository/get_data_local.dart';
+import 'package:flutter_app/repository/getData/abstract_coins_repository.dart';
+import 'package:flutter_app/repository/getData/get_data.dart';
+import 'package:flutter_app/repository/getData/get_data_local.dart';
 
 class LoadDataFactory {
   final AbstractCoinRepositoty networkRepository;

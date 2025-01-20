@@ -1,6 +1,6 @@
 import 'package:flutter_app/models/coins_model.dart';
 import 'package:flutter_app/models/detail.dart';
-import 'package:flutter_app/repository/abstract_coins_repository.dart';
+import 'package:flutter_app/repository/getData/abstract_coins_repository.dart';
 
 class GetLocalData extends AbstractCoinRepositoty {
   @override
