@@ -30,16 +30,23 @@ class UserNotesRepository {
 
     if (userBox.isNotEmpty) {
       final user = userBox.getAt(0);
+      print('Current user in Hive: ${user?.username}');
 
       final querySnapshot = await FirebaseFirestore.instance
           .collection(collectionName)
-          .where('user_id', isEqualTo: user?.username ?? 'unknown_user')
+          .where('userId', isEqualTo: user?.username ?? 'unknown_user')
           .get();
+
+      print('Fetched documents count: ${querySnapshot.docs.length}');
+      querySnapshot.docs.forEach((doc) {
+        print('Document data: ${doc.data()}');
+      });
 
       return querySnapshot.docs
           .map((doc) => UserNote.fromJson(doc.data()))
           .toList();
     } else {
+      print('No user found in Hive storage');
       throw Exception('No user found in Hive storage');
     }
   }

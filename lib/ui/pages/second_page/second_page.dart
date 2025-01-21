@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/models/note_request.dart';
 
 import 'package:flutter_app/repository/firebase/network_repository.dart';
-import 'package:flutter_app/repository/firebase/user_resulr_repository.dart';
+import 'package:flutter_app/repository/firebase/user_result_repository.dart';
 
 class SecondPage extends StatefulWidget {
   const SecondPage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _SecondPageState createState() => _SecondPageState();
 }
 

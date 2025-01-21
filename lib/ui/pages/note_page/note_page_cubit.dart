@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_app/models/note_request.dart';
 
 import 'package:flutter_app/repository/firebase/network_repository.dart';
-import 'package:flutter_app/repository/firebase/user_resulr_repository.dart';
+import 'package:flutter_app/repository/firebase/user_result_repository.dart';
 import 'package:flutter_app/ui/pages/note_page/note_page_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,8 +15,8 @@ class NotePageCubit extends Cubit<NotePageState> {
 
     try {
       final userNotes = await UserNotesRepository.fetchUserNotes();
+      print('User notes fetched: ${userNotes.length}');
 
-      // Получаем все заметки параллельно с помощью Future.wait
       final fetchedNotes = await Future.wait(userNotes.map((userNote) async {
         final noteSnapshot = await FirebaseFirestore.instance
             .collection(NotesRepository.collectionName)
@@ -28,7 +28,8 @@ class NotePageCubit extends Cubit<NotePageState> {
           try {
             return NoteRequest.fromJson(data);
           } catch (e) {
-            debugPrint('Ошибка при парсинге данных: $e');
+            debugPrint(
+                'Ошибка при парсинге данных заметки ${userNote.noteId}: $e');
           }
         }
         return null;
@@ -38,8 +39,10 @@ class NotePageCubit extends Cubit<NotePageState> {
         isLoading: false,
         listNotes: fetchedNotes.whereType<NoteRequest>().toList(),
       ));
+      print('Total notes processed: ${fetchedNotes.length}');
     } catch (e) {
       emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
+      print('Error fetching notes: $e');
     }
   }
 }
