@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'notes.g.dart';
+part 'note_request.g.dart';
 
 @JsonSerializable()
 class NoteRequest {
@@ -14,8 +14,9 @@ class NoteRequest {
     required this.name,
     required this.content,
     required this.key,
-  })  : createdDate = DateTime.now().millisecondsSinceEpoch,
-        updatedDate = DateTime.now().millisecondsSinceEpoch;
+    required this.createdDate,
+    required this.updatedDate,
+  });
 
   factory NoteRequest.fromJson(Map<String, dynamic> json) =>
       _$NoteRequestFromJson(json);

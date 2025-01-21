@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/notes.dart';
+import 'package:flutter_app/models/note_request.dart';
+
 import 'package:flutter_app/repository/firebase/network_repository.dart';
 import 'package:flutter_app/repository/firebase/user_resulr_repository.dart';
 
@@ -7,6 +8,7 @@ class SecondPage extends StatefulWidget {
   const SecondPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _SecondPageState createState() => _SecondPageState();
 }
 
@@ -23,16 +25,23 @@ class _SecondPageState extends State<SecondPage> {
       return;
     }
 
-    final note = NoteRequest(name: name, content: content, key: name);
+    final note = NoteRequest(
+        name: name,
+        content: content,
+        key: name,
+        createdDate: DateTime.now().millisecondsSinceEpoch,
+        updatedDate: DateTime.now().millisecondsSinceEpoch);
 
     await NotesRepository.addNewNote(note);
     await UserNotesRepository.addNewUserNote(note.key);
 
-    ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('Заметка сохранена')));
+    if (mounted) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Заметка сохранена')));
 
-    _nameController.clear();
-    _contentController.clear();
+      _nameController.clear();
+      _contentController.clear();
+    }
   }
 
   @override

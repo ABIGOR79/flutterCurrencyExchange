@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_app/models/notes.dart';
+import 'package:flutter_app/models/note_request.dart';
 
 class NotesRepository {
   static const String collectionName = "notes";

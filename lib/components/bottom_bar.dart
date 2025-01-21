@@ -68,9 +68,27 @@ class BottomBar extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(80))),
                 child: Center(
                     child: Icon(
-                  Icons.settings,
+                  Icons.note,
                   size: 25,
                   color: selectedIndex == 2 ? Colors.white : Colors.black,
+                )),
+              ),
+            ),
+            spacerHorizontal(25),
+            GestureDetector(
+              onTap: () => {if (selectedIndex != 3) onSelectedChange(3)},
+              child: Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                    color:
+                        selectedIndex == 3 ? Colors.green : Colors.transparent,
+                    borderRadius: BorderRadius.all(Radius.circular(80))),
+                child: Center(
+                    child: Icon(
+                  Icons.settings,
+                  size: 25,
+                  color: selectedIndex == 3 ? Colors.white : Colors.black,
                 )),
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_app/models/user.dart';
+import 'package:flutter_app/models/user_note.dart';
 import 'package:hive/hive.dart';
 
 class UserNotesRepository {
@@ -11,18 +12,20 @@ class UserNotesRepository {
     if (userBox.isNotEmpty) {
       final user = userBox.getAt(0);
 
-      final userNote = {
-        'noteId': noteId,
-        'userId': user?.username ?? 'unknown_user',
-      };
+      final userNote = UserNote(
+        noteId: noteId,
+        userId: user?.username ?? 'unknown_user',
+      );
 
-      await FirebaseFirestore.instance.collection(collectionName).add(userNote);
+      await FirebaseFirestore.instance
+          .collection(collectionName)
+          .add(userNote.toJson());
     } else {
       throw Exception('No user found in Hive storage');
     }
   }
 
-  static Future<List<Map<String, dynamic>>> fetchUserNotes() async {
+  static Future<List<UserNote>> fetchUserNotes() async {
     final userBox = Hive.box<User>('users');
 
     if (userBox.isNotEmpty) {
@@ -30,10 +33,12 @@ class UserNotesRepository {
 
       final querySnapshot = await FirebaseFirestore.instance
           .collection(collectionName)
-          .where('userId', isEqualTo: user?.username ?? 'unknown_user')
+          .where('user_id', isEqualTo: user?.username ?? 'unknown_user')
           .get();
 
-      return querySnapshot.docs.map((e) => e.data()).toList();
+      return querySnapshot.docs
+          .map((doc) => UserNote.fromJson(doc.data()))
+          .toList();
     } else {
       throw Exception('No user found in Hive storage');
     }

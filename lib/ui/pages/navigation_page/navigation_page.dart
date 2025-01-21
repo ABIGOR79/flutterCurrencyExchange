@@ -4,6 +4,7 @@ import 'package:flutter_app/helper/widget_helper.dart';
 import 'package:flutter_app/ui/pages/home_page/home_page.dart';
 import 'package:flutter_app/ui/pages/navigation_page/navigation_page_cubit.dart';
 import 'package:flutter_app/ui/pages/navigation_page/navigation_page_state.dart';
+import 'package:flutter_app/ui/pages/note_page/note_page_screen.dart';
 import 'package:flutter_app/ui/pages/second_page/second_page.dart';
 import 'package:flutter_app/ui/pages/third_page/third_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,6 +57,8 @@ class _NavigationPageState extends State<NavigationPage> {
         return MyHomePage();
       case 1:
         return SecondPage();
+      case 2:
+        return NotePageScreen();
       default:
         return const ThirdPage();
     }
