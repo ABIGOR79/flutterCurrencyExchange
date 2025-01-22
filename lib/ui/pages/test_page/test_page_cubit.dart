@@ -9,15 +9,16 @@ class TestPageCubit extends Cubit<TestPageState> {
             isLoading: false, myList: <String>[], isState: false));
 
   final test = TestRepository();
-
   Future<List<String>> getSameList(bool currentState) async {
     try {
       emit(state.copyWith(isLoading: true));
-      final myList = await test.getList(network: state.isState);
+      await Future.delayed(Duration(seconds: 2));
+      final myList = await test.getList(network: currentState);
       emit(state.copyWith(myList: myList, isLoading: false));
       return myList;
     } catch (e) {
       debugPrint('$e');
+      emit(state.copyWith(isLoading: false));
       return [];
     }
   }
