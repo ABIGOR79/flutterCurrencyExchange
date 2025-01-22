@@ -4,6 +4,7 @@ import 'package:flutter_app/theme/icons.dart';
 
 import 'package:flutter_app/ui/pages/navigation_page/navigation_page.dart';
 import 'package:flutter_app/ui/pages/register/register_page.dart';
+import 'package:flutter_app/ui/pages/test_page/test_page.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -30,7 +31,7 @@ class _SplashPageState extends State<SplashPage> {
       } else {
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const NavigationPage()),
+          MaterialPageRoute(builder: (context) => const TestPage()),
           (route) => false,
         );
       }

@@ -2,6 +2,8 @@ import 'package:flutter_app/repository/getData/load_data_factory.dart';
 import 'package:flutter_app/ui/pages/home_page/home_page_event.dart';
 import 'package:flutter_app/ui/pages/home_page/home_page_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 
 class CoinBloc extends Bloc<CoinEvent, CoinState> {
   final LoadDataFactory loadDataFactory;
@@ -28,8 +30,9 @@ class CoinBloc extends Bloc<CoinEvent, CoinState> {
       final coins = await repository.getData();
       emit(
           state.copyWith(coins: coins, filteredCoins: coins, isLoading: false));
-    } catch (e) {
+    } catch (e, st) {
       emit(state.copyWith(isLoading: false));
+      GetIt.I<Talker>().handle(e, st);
     }
   }
 
