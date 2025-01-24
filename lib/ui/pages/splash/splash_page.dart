@@ -23,19 +23,37 @@ class _SplashPageState extends State<SplashPage> {
 
     Future.delayed(const Duration(seconds: 3), () {
       if (box.isEmpty) {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => RegistrationPage()),
-          (route) => false,
-        );
+        if (mounted) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => RegistrationPage()),
+            (route) => false,
+          );
+        }
       } else {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const TestPage()),
-          (route) => false,
-        );
+        if (mounted) Navigator.of(context).push(_createRoute());
       }
     });
+  }
+
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => const TestPage(),
+      transitionDuration: Duration(seconds: 2),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
   }
 
   @override

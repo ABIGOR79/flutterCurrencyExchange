@@ -32,14 +32,31 @@ class _TestPageState extends State<TestPage> {
             children: [
               Switch(
                   value: state.isState, onChanged: (_) => cubit.switchState()),
+              TextField(
+                controller: cubit.qureyText,
+                decoration: InputDecoration(
+                  hintText: 'Поиск...',
+                  border: OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.clear),
+                    onPressed: () {
+                      cubit.qureyText.clear();
+                      cubit.filteredList('');
+                    },
+                  ),
+                ),
+                onChanged: (value) {
+                  cubit.filteredList(value);
+                },
+              ),
               if (state.isLoading)
                 Center(child: CircularProgressIndicator())
               else
                 Expanded(
                   child: ListView.builder(
-                    itemCount: state.myList.length,
+                    itemCount: state.filteredList.length,
                     itemBuilder: (context, i) {
-                      final item = state.myList[i];
+                      final item = state.filteredList[i];
                       return ListTile(
                         title: Text(item),
                       );

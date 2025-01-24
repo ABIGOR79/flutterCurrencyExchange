@@ -6,15 +6,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class TestPageCubit extends Cubit<TestPageState> {
   TestPageCubit()
       : super(TestPageState(
-            isLoading: false, myList: <String>[], isState: false));
+            isLoading: false,
+            myList: <String>[],
+            isState: false,
+            filteredList: <String>[]));
 
   final test = TestRepository();
+  final qureyText = TextEditingController();
   Future<List<String>> getSameList(bool currentState) async {
     try {
       emit(state.copyWith(isLoading: true));
       await Future.delayed(Duration(seconds: 2));
       final myList = await test.getList(network: currentState);
-      emit(state.copyWith(myList: myList, isLoading: false));
+      emit(state.copyWith(
+          myList: myList, filteredList: myList, isLoading: false));
       return myList;
     } catch (e) {
       debugPrint('$e');
@@ -27,5 +32,12 @@ class TestPageCubit extends Cubit<TestPageState> {
     final newState = !state.isState;
     emit(state.copyWith(isState: newState));
     getSameList(newState);
+  }
+
+  void filteredList(String query) {
+    final filterList = state.myList
+        .where((el) => el.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+    emit(state.copyWith(filteredList: filterList));
   }
 }
