@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/components/list_tile_note.dart';
+
 import 'package:flutter_app/ui/pages/note_page/note_page_cubit.dart';
 import 'package:flutter_app/ui/pages/note_page/note_page_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,23 +32,30 @@ class _NotePageScreenState extends State<NotePageScreen> {
             title: const Text('My Notes'),
           ),
           body: SafeArea(
-            child: state.isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : state.errorMessage != null
-                    ? Center(child: Text('Ошибка: ${state.errorMessage}'))
-                    : state.listNotes.isEmpty
-                        ? const Center(child: Text('Нет заметок'))
-                        : ListView.builder(
-                            itemCount: state.listNotes.length,
-                            itemBuilder: (context, index) {
-                              final note = state.listNotes[index];
-                              return ListTile(
-                                title: Text(note.name),
-                                subtitle: Text(note.content),
-                              );
-                            },
-                          ),
-          ),
+              child: state.isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : state.errorMessage != null
+                      ? Center(child: Text('Ошибка: ${state.errorMessage}'))
+                      : state.listNotes.isEmpty
+                          ? const Center(child: Text('Нет заметок'))
+                          : ListView.builder(
+                              itemCount: state.listNotes.length,
+                              itemBuilder: (context, index) {
+                                final note = state.listNotes[index];
+                                return NoteItemWidget(
+                                  note: note,
+                                  onFavoriteToggle: () async {},
+                                  onDelete: () async {
+                                    await cubit.deleteNote(note.key);
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text('Заметка удалена')),
+                                    );
+                                  },
+                                );
+                              },
+                            )),
         );
       },
     );

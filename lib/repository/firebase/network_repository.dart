@@ -26,4 +26,11 @@ class NotesRepository {
         .map((e) => NoteRequest.fromJson(e.data()))
         .toList();
   }
+
+  static Future<void> deleteNote(String noteKey) async {
+    await FirebaseFirestore.instance
+        .collection(collectionName)
+        .doc(noteKey)
+        .delete();
+  }
 }

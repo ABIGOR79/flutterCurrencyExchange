@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/components/list_tile.dart';
+import 'package:flutter_app/components/list_tile_coin.dart';
 import 'package:flutter_app/repository/getData/abstract_coins_repository.dart';
 import 'package:flutter_app/repository/getData/load_data_factory.dart';
 import 'package:flutter_app/ui/pages/home_page/home_page_cubit.dart';

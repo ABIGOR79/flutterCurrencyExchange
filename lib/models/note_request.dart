@@ -9,14 +9,15 @@ class NoteRequest {
   final String key;
   final int createdDate;
   final int updatedDate;
+  final bool isChecked;
 
-  NoteRequest({
-    required this.name,
-    required this.content,
-    required this.key,
-    required this.createdDate,
-    required this.updatedDate,
-  });
+  NoteRequest(
+      {required this.name,
+      required this.content,
+      required this.key,
+      required this.createdDate,
+      required this.updatedDate,
+      required this.isChecked});
 
   factory NoteRequest.fromJson(Map<String, dynamic> json) =>
       _$NoteRequestFromJson(json);

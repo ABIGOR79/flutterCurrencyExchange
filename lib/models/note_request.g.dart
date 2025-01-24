@@ -12,6 +12,7 @@ NoteRequest _$NoteRequestFromJson(Map<String, dynamic> json) => NoteRequest(
       key: json['key'] as String,
       createdDate: (json['createdDate'] as num).toInt(),
       updatedDate: (json['updatedDate'] as num).toInt(),
+      isChecked: json['isChecked'] as bool,
     );
 
 Map<String, dynamic> _$NoteRequestToJson(NoteRequest instance) =>
@@ -21,4 +22,5 @@ Map<String, dynamic> _$NoteRequestToJson(NoteRequest instance) =>
       'key': instance.key,
       'createdDate': instance.createdDate,
       'updatedDate': instance.updatedDate,
+      'isChecked': instance.isChecked,
     };

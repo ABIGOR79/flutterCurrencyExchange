@@ -29,7 +29,8 @@ class _SecondPageState extends State<SecondPage> {
         content: content,
         key: name,
         createdDate: DateTime.now().millisecondsSinceEpoch,
-        updatedDate: DateTime.now().millisecondsSinceEpoch);
+        updatedDate: DateTime.now().millisecondsSinceEpoch,
+        isChecked: false);
 
     await NotesRepository.addNewNote(note);
     await UserNotesRepository.addNewUserNote(note.key);

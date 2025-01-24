@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user.dart';
 import 'package:flutter_app/models/user_note.dart';
 import 'package:hive/hive.dart';
@@ -30,23 +31,23 @@ class UserNotesRepository {
 
     if (userBox.isNotEmpty) {
       final user = userBox.getAt(0);
-      print('Current user in Hive: ${user?.username}');
+      debugPrint('Current user in Hive: ${user?.username}');
 
       final querySnapshot = await FirebaseFirestore.instance
           .collection(collectionName)
           .where('userId', isEqualTo: user?.username ?? 'unknown_user')
           .get();
 
-      print('Fetched documents count: ${querySnapshot.docs.length}');
-      querySnapshot.docs.forEach((doc) {
-        print('Document data: ${doc.data()}');
-      });
+      debugPrint('Fetched documents count: ${querySnapshot.docs.length}');
+      for (var doc in querySnapshot.docs) {
+        debugPrint('Document data: ${doc.data()}');
+      }
 
       return querySnapshot.docs
           .map((doc) => UserNote.fromJson(doc.data()))
           .toList();
     } else {
-      print('No user found in Hive storage');
+      debugPrint('No user found in Hive storage');
       throw Exception('No user found in Hive storage');
     }
   }

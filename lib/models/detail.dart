@@ -26,14 +26,13 @@ class CoinDetail {
 
   @override
   String toString() {
-    // Логируем данные в консоль
     debugPrint("$price, $highHour, $lowHour");
     return "$price, $highHour, $lowHour";
   }
 
   String get fullImageUrl => image != null
       ? 'https://www.cryptocompare.com$image'
-      : 'https://via.placeholder.com/150'; // Заглушка, если изображения нет
+      : 'https://via.placeholder.com/150';
 
   factory CoinDetail.fromJson(Map<String, dynamic> json) =>
       _$CoinDetailFromJson(json);

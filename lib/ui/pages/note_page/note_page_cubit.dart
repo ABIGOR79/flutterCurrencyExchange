@@ -15,7 +15,7 @@ class NotePageCubit extends Cubit<NotePageState> {
 
     try {
       final userNotes = await UserNotesRepository.fetchUserNotes();
-      print('User notes fetched: ${userNotes.length}');
+      debugPrint('User notes fetched: ${userNotes.length}');
 
       final fetchedNotes = await Future.wait(userNotes.map((userNote) async {
         final noteSnapshot = await FirebaseFirestore.instance
@@ -43,6 +43,22 @@ class NotePageCubit extends Cubit<NotePageState> {
     } catch (e) {
       emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
       print('Error fetching notes: $e');
+    }
+  }
+
+  Future<void> deleteNote(String noteKey) async {
+    try {
+      await NotesRepository.deleteNote(noteKey);
+
+      final updatedNotes =
+          state.listNotes.where((note) => note.key != noteKey).toList();
+
+      emit(state.copyWith(listNotes: updatedNotes));
+
+      debugPrint('Заметка удалена: $noteKey');
+    } catch (e) {
+      debugPrint('Ошибка при удалении заметки: $e');
+      emit(state.copyWith(errorMessage: 'Ошибка при удалении заметки'));
     }
   }
 }

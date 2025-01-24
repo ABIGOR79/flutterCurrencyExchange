@@ -28,8 +28,14 @@ class CoinItemDetail extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Image.network(coin.coinDetail.fullImageUrl,
+                errorBuilder: (context, error, stackTrace) {
+              return const Icon(Icons.broken_image, size: 40);
+            }),
             Text('Price: \$${coin.coinDetail.price?.toStringAsFixed(2)}'),
             Text('Symbol: ${coin.symbol}'),
+            Text('Low Price: \$${coin.coinDetail.lowHour}'),
+            Text('High Price: ${coin.coinDetail.highHour}'),
           ],
         ),
       ),
