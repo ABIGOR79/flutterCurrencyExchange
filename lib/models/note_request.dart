@@ -19,6 +19,17 @@ class NoteRequest {
       required this.updatedDate,
       required this.isChecked});
 
+  NoteRequest copyWith({bool? isChecked}) {
+    return NoteRequest(
+      name: name,
+      content: content,
+      key: key,
+      createdDate: createdDate,
+      updatedDate: updatedDate,
+      isChecked: isChecked ?? this.isChecked,
+    );
+  }
+
   factory NoteRequest.fromJson(Map<String, dynamic> json) =>
       _$NoteRequestFromJson(json);
 

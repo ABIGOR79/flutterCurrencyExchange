@@ -9,15 +9,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: themeLight,
-      routes: routes,
-      navigatorObservers: [
-        TalkerRouteObserver(
-          GetIt.I<Talker>(),
-        )
-      ],
+      routerConfig: router,
+      // navigatorObservers: [
+      //   TalkerRouteObserver(
+      //     GetIt.I<Talker>(),
+      //   )
+      // ],
     );
   }
 }

@@ -18,7 +18,9 @@ class _NotePageScreenState extends State<NotePageScreen> {
   @override
   void initState() {
     super.initState();
-    cubit.fetchUserNotes();
+    cubit.fetchUserNotes().then((_) {
+      cubit.fetchFavoriteNotes();
+    });
   }
 
   @override
@@ -26,36 +28,55 @@ class _NotePageScreenState extends State<NotePageScreen> {
     return BlocBuilder<NotePageCubit, NotePageState>(
       bloc: cubit,
       builder: (context, state) {
+        final filteredNotes = state.showFavorites
+            ? state.listNotes.where((note) => note.isChecked).toList()
+            : state.listNotes;
+
         return Scaffold(
           appBar: AppBar(
             leading: const Icon(Icons.note),
             title: const Text('My Notes'),
+            actions: [
+              IconButton(
+                icon: Icon(
+                  Icons.favorite,
+                  color: state.showFavorites ? Colors.blue : Colors.grey,
+                ),
+                onPressed: () {
+                  cubit.toggleShowFavorites();
+                },
+              ),
+            ],
           ),
           body: SafeArea(
-              child: state.isLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : state.errorMessage != null
-                      ? Center(child: Text('Ошибка: ${state.errorMessage}'))
-                      : state.listNotes.isEmpty
-                          ? const Center(child: Text('Нет заметок'))
-                          : ListView.builder(
-                              itemCount: state.listNotes.length,
-                              itemBuilder: (context, index) {
-                                final note = state.listNotes[index];
-                                return NoteItemWidget(
-                                  note: note,
-                                  onFavoriteToggle: () async {},
-                                  onDelete: () async {
-                                    await cubit.deleteNote(note.key);
+            child: state.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : state.errorMessage != null
+                    ? Center(child: Text('Ошибка: ${state.errorMessage}'))
+                    : filteredNotes.isEmpty
+                        ? const Center(child: Text('Нет заметок'))
+                        : ListView.builder(
+                            itemCount: filteredNotes.length,
+                            itemBuilder: (context, index) {
+                              final note = filteredNotes[index];
+                              return NoteItemWidget(
+                                note: note,
+                                onFavoriteToggle: () async {
+                                  await cubit.toggleFavoriteStatus(
+                                      note.key, note.isChecked);
+                                },
+                                onDelete: () async {
+                                  await cubit.deleteNote(note.key);
 
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text('Заметка удалена')),
-                                    );
-                                  },
-                                );
-                              },
-                            )),
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text('Заметка удалена')),
+                                  );
+                                },
+                              );
+                            },
+                          ),
+          ),
         );
       },
     );
