@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user.dart';
 import 'package:flutter_app/theme/icons.dart';
+import 'package:flutter_app/ui/pages/camera/camera.dart';
 import 'package:flutter_app/ui/pages/navigation_page/navigation_page.dart';
+import 'package:flutter_app/ui/pages/note_page/note_page_screen.dart';
 import 'package:flutter_app/ui/pages/profile/profile_page.dart';
 import 'package:flutter_app/ui/pages/register/register_page.dart';
 import 'package:flutter_app/ui/pages/test_page/test_page.dart';
+import 'package:flutter_app/ui/pages/testforsomething/testsomesthing.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -24,11 +28,7 @@ class _SplashPageState extends State<SplashPage> {
     Future.delayed(const Duration(seconds: 3), () {
       if (box.isEmpty) {
         if (mounted) {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => RegistrationPage()),
-            (route) => false,
-          );
+          context.go('/register');
         }
       } else {
         if (mounted) Navigator.of(context).push(_createRoute());
@@ -38,7 +38,7 @@ class _SplashPageState extends State<SplashPage> {
 
   Route _createRoute() {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => NavigationPage(),
+      pageBuilder: (context, animation, secondaryAnimation) => NotePageScreen(),
       transitionDuration: Duration(seconds: 2),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);

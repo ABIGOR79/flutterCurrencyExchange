@@ -32,23 +32,7 @@ class _TestPageState extends State<TestPage> {
             children: [
               Switch(
                   value: state.isState, onChanged: (_) => cubit.switchState()),
-              TextField(
-                controller: cubit.qureyText,
-                decoration: InputDecoration(
-                  hintText: 'Поиск...',
-                  border: OutlineInputBorder(),
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.clear),
-                    onPressed: () {
-                      cubit.qureyText.clear();
-                      cubit.filteredList('');
-                    },
-                  ),
-                ),
-                onChanged: (value) {
-                  cubit.filteredList(value);
-                },
-              ),
+              TextFieldWidget(cubit: cubit),
               if (state.isLoading)
                 Center(child: CircularProgressIndicator())
               else
@@ -73,6 +57,36 @@ class _TestPageState extends State<TestPage> {
             ],
           ),
         );
+      },
+    );
+  }
+}
+
+class TextFieldWidget extends StatelessWidget {
+  const TextFieldWidget({
+    super.key,
+    required this.cubit,
+  });
+
+  final TestPageCubit cubit;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: cubit.qureyText,
+      decoration: InputDecoration(
+        hintText: 'Поиск...',
+        border: OutlineInputBorder(),
+        suffixIcon: IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () {
+            cubit.qureyText.clear();
+            cubit.filteredList('');
+          },
+        ),
+      ),
+      onChanged: (value) {
+        cubit.filteredList(value);
       },
     );
   }

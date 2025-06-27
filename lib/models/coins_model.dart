@@ -28,7 +28,6 @@ class CoinsData {
 
   @override
   String toString() {
-    // Логируем данные в консоль
     debugPrint("$symbol, $coinDetail");
     return "$symbol, $coinDetail";
   }

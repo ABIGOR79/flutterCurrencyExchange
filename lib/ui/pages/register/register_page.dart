@@ -3,6 +3,7 @@ import 'package:flutter_app/ui/pages/navigation_page/navigation_page.dart';
 import 'package:flutter_app/ui/pages/register/register_page_cubit.dart';
 import 'package:flutter_app/ui/pages/register/register_page_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class RegistrationPage extends StatelessWidget {
   const RegistrationPage({super.key});
@@ -21,10 +22,7 @@ class RegistrationPage extends StatelessWidget {
         body: BlocConsumer<UserCubit, UserState>(
           listener: (context, state) {
             if (state.isSuccess) {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (_) => const NavigationPage()),
-              );
+              context.go('/navigation');
             } else if (state.isError) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(

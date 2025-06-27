@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
 
 class ThirdPage extends StatefulWidget {
@@ -28,10 +29,7 @@ class _ThirdPageState extends State<ThirdPage> {
       const SnackBar(content: Text('All users have been deleted')),
     );
 
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      '/registration',
-      (route) => false,
-    );
+    context.go('/registration');
   }
 
   @override
